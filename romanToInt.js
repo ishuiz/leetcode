@@ -19,19 +19,14 @@ var romanToInt = function(s) {
     'I': 1
   }
   let ans = 0
-  for (let i=0; i<s.length; i++) {
-    let key = s[i]
-    const next = s[i + 1]
-    if (
-      (key === 'C' && (next === 'M' || next === 'D')) ||
-      (key === 'X' && (next === 'C' || next === 'L')) ||
-      (key === 'I' && (next === 'X' || next === 'V'))
-    ) {
-      key += next
-      ans += romanMap[key]
-      i += 1
+  const len = s.length
+  for (let i=0; i<len;) {
+    if (i + 1 < len && romanMap[s.slice(i, i+2)]) {
+      ans += romanMap[s.slice(i, i+2)]
+      i += 2
     } else {
-      ans += romanMap[key]
+      ans += romanMap[s[i]]
+      i += 1
     }
   }
   return ans
